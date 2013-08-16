@@ -1,8 +1,13 @@
-default: count
+SRCS = hashmap.cpp
 
-count:
-	g++ main.cpp hashmap.cpp -I. -o count
+default: count test
 
-clean: count
+count: test
+	g++ main.cpp $(SRCS) -I. -o count
+
+test:
+	g++ test.cpp $(SRCS) -I. -o test
+
+clean:
 	rm count
 
