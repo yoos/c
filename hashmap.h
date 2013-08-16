@@ -31,6 +31,7 @@ public:
 class HashMap {
 	HashLink** _table;        // Array of pointers to HashLinks
 	uint64_t   _tableSize;    // Size of table
+	uint64_t   _numBuckets;   // Number of buckets
 	uint64_t   _count;        // Number of HashLinks
 
 	// Helper functions

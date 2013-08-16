@@ -37,6 +37,7 @@ HashMap::HashMap(uint64_t tableSize)
 {
 	_table = (HashLink**) calloc(tableSize, sizeof(HashLink*));
 	_tableSize = tableSize;
+	_numBuckets = 0;
 	_count = 0;
 }
 
@@ -86,6 +87,7 @@ void HashMap::inc(KEYTYPE key)
 	}
 	else {
 		_table[hash] = new HashLink(key, 1);
+		_numBuckets++;
 		_count++;
 
 		// If load is too high, resize table.
@@ -107,14 +109,7 @@ uint64_t HashMap::getCapacity()
 
 float HashMap::getLoad()
 {
-	uint64_t numBuckets = 0;
-	for(uint64_t i=0; i<_tableSize; i++) {
-		if (_table[i] != 0) {
-			numBuckets++;
-		}
-	}
-
-	return ((float) numBuckets) / _tableSize;
+	return ((float) _numBuckets) / _tableSize;
 }
 
 void HashMap::getKeys(KEYTYPE* keys)
