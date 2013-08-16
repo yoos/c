@@ -13,6 +13,7 @@
 #define KEYTYPE std::string
 #define VALTYPE uint16_t
 #define LOAD_THRESHOLD 0.75   // Table load threshold at which we increase table size.
+#define RESIZE_FACTOR 2   // Multiply table size by this factor on resize.
 
 class HashLink {
 	KEYTYPE     _key;
@@ -37,7 +38,7 @@ class HashMap {
 	// Helper functions
 	uint64_t _hashKey(KEYTYPE key, uint64_t tableSize);   // Generate hash.
 	void _deleteBucket(HashLink* p);   // Delete HashLinks.
-	void _insert(KEYTYPE key, VALTYPE val);   // Insert key-value pairs.
+	void _newTableInsert(KEYTYPE key, VALTYPE val);   // Insert key-value pairs into new table.
 	void _resizeTable();   // Resize table if load is too high.
 
 public:

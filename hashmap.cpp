@@ -157,13 +157,13 @@ void HashMap::_deleteBucket(HashLink* p)
 	delete p;
 }
 
-void HashMap::_insert(KEYTYPE key, VALTYPE val)
+void HashMap::_newTableInsert(KEYTYPE key, VALTYPE val)
 {
 	uint64_t hash = _hashKey(key, _tableSize);
 	HashLink* link = _table[hash];
 
-	// If bucket already exists, find the last link in bucket.
 	if (link != 0) {
+		// Find next available slot.
 		while (link->next() != 0) {
 			link = link->next();
 		}
@@ -171,17 +171,40 @@ void HashMap::_insert(KEYTYPE key, VALTYPE val)
 	}
 	else {
 		_table[hash] = new HashLink(key, val);
+		_numBuckets++;
 	}
-
-	_count++;
 }
 
 void HashMap::_resizeTable()
 {
-	// Create new table with twice the old size.
-	HashLink** _newTable = (HashLink**) calloc(_tableSize*2, sizeof(HashLink*));
+	HashLink** _oldTable = _table;   // Move old table to temporary location.
+	uint64_t   _oldTableSize = _tableSize;   // Save old table size.
+	_tableSize *= RESIZE_FACTOR;   // Update table size.
+	_numBuckets = 0;   // Reset bucket count.
+	_table = (HashLink**) calloc(_tableSize, sizeof(HashLink*));   // Allocate new table.
 
-	// Recalculate hash values and modify the table entries and the HashLinks' next pointers
-	// TODO
+	// Step through the old table and populate new table using new hash values.
+	HashLink* oldLink = 0;
+	for (uint64_t i=0; i<_oldTableSize; i++) {
+		if (_oldTable[i] != 0) {
+			oldLink = _oldTable[i];
+			while (oldLink->next() != 0) {
+				// Insert link into new table.
+				_newTableInsert(oldLink->key(), oldLink->val());
+
+				// Move onto next link.
+				oldLink = oldLink->next();
+			}
+			// Last one
+			_newTableInsert(oldLink->key(), oldLink->val());
+		}
+	}
+
+	// Deallocate old table.
+	for (uint64_t i=0; i<_oldTableSize; i++) {
+		if (_oldTable[i] != 0) {
+			_deleteBucket(_oldTable[i]);
+		}
+	}
 }
 
