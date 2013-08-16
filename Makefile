@@ -9,5 +9,5 @@ test:
 	g++ test.cpp $(SRCS) -I. -o test
 
 clean:
-	rm count
+	rm test count
 
