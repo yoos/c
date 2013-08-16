@@ -48,6 +48,12 @@ void test_hashmap()
 	assert(hm.get("world") == 1);
 	assert(hm.get("xnrld") == 1);
 	assert(hm.getLoad() == 0.02f);
+
+	// More collisions
+	hm.inc("ymrld");   // Same hash value as "world"
+	assert(hm.getCount() == 4);
+	assert(hm.get("ymrld") == 1);
+	assert(hm.getLoad() == 0.02f);
 }
 
 int main(int argc, char** argv)
