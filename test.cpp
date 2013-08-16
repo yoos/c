@@ -26,13 +26,28 @@ void test_hashmap()
 	assert(hm.getCount() == 0);
 	assert(hm.getCapacity() == 100);
 
+	// Can we increment?
 	hm.inc("hello");
 	assert(hm.getCount() == 1);
 	assert(hm.get("hello") == 1);
 
+	// Can we increment again?
 	hm.inc("hello");
 	assert(hm.getCount() == 1);
 	assert(hm.get("hello") == 2);
+
+	// Can we increment a different key?
+	hm.inc("world");
+	assert(hm.getCount() == 2);
+	assert(hm.get("world") == 1);
+	assert(hm.get("mars") == 0);
+
+	// Calculate table load.
+	hm.inc("xnrld");   // Same hash value as "world"
+	assert(hm.getCount() == 3);
+	assert(hm.get("world") == 1);
+	assert(hm.get("xnrld") == 1);
+	assert(hm.getLoad() == 0.02f);
 }
 
 int main(int argc, char** argv)
