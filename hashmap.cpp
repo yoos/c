@@ -58,10 +58,15 @@ VALTYPE HashMap::get(KEYTYPE key)
 
 	// Find the link with the right key, assuming that if a bucket exists here, the key has to be here, too.
 	if (link != 0) {
-		while (link->key() != key) {
+		// Dig through bucket.
+		while (link->key() != key && link->next() != 0) {
 			link = link->next();
 		}
-		return link->val();
+
+		// Have we found the key?
+		if (link->key() == key) {
+			return link->val();
+		}
 	}
 
 	// Otherwise, return 0.
@@ -74,18 +79,23 @@ void HashMap::inc(KEYTYPE key)
 	HashLink* link = _table[hash];
 
 	if (link != 0) {
+		// Dig through bucket.
+		while (link->key() != key && link->next() != 0) {
+			link = link->next();
+		}
+
+		// Have we found the key?
 		if (link->key() == key) {
 			link->val(link->val()+1);
 		}
-		else if (link->next() == 0) {
+		// If not, create new.
+		else {
 			link->next(new HashLink(key, 1));
 			_count++;
 		}
-		else {
-			link = link->next();
-		}
 	}
 	else {
+		// Create new link.
 		_table[hash] = new HashLink(key, 1);
 		_numBuckets++;
 		_count++;
