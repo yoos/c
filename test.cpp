@@ -54,6 +54,22 @@ void test_hashmap()
 	assert(hm.getCount() == 4);
 	assert(hm.get("ymrld") == 1);
 	assert(hm.getLoad() == 0.02f);
+
+	// Does the table dynamically resize?
+	HashMap hm1(1);
+	assert(hm1.getCapacity() == 1);
+	hm1.inc("first");
+	assert(hm1.getCount() == 1);
+	assert(hm1.get("first") == 1);
+	assert(hm1.getCapacity() == 2);
+	assert(hm1.getLoad() == 0.5f);
+	hm1.inc("first");
+	hm1.inc("first1");   // This should evaluate to a different hash value than "first", for a table size of 2.
+	assert(hm1.getCount() == 2);
+	assert(hm1.get("first") == 2);
+	assert(hm1.get("first1") == 1);
+	assert(hm1.getCapacity() == 4);
+	assert(hm1.getLoad() == 0.5f);
 }
 
 int main(int argc, char** argv)
