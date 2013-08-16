@@ -52,7 +52,7 @@ HashMap::~HashMap()
 
 VALTYPE HashMap::get(KEYTYPE key)
 {
-	uint64_t hash = _hashKey(key);
+	uint64_t hash = _hashKey(key, _tableSize);
 	HashLink* link = _table[hash];
 
 	// Find the link with the right key, assuming that if a bucket exists here, the key has to be here, too.
@@ -69,7 +69,7 @@ VALTYPE HashMap::get(KEYTYPE key)
 
 void HashMap::inc(KEYTYPE key)
 {
-	uint64_t hash = _hashKey(key);
+	uint64_t hash = _hashKey(key, _tableSize);
 	HashLink* link = _table[hash];
 
 	if (link != 0) {
@@ -87,6 +87,11 @@ void HashMap::inc(KEYTYPE key)
 	else {
 		_table[hash] = new HashLink(key, 1);
 		_count++;
+
+		// If load is too high, resize table.
+		if (getLoad() > LOAD_THRESHOLD) {
+			_resizeTable();
+		}
 	}
 }
 
@@ -127,14 +132,14 @@ void HashMap::getKeys(KEYTYPE* keys)
 }
 
 // TODO: Need a better hash function.
-uint64_t HashMap::_hashKey(KEYTYPE key)
+uint64_t HashMap::_hashKey(KEYTYPE key, uint64_t tableSize)
 {
 	uint64_t out = 0;
 	for (int i=0; key[i] != '\0'; i++) {
-		out = (out+key[i]) % _tableSize;
+		out = (out+key[i]) % tableSize;
 	}
 
-	assert(out < _tableSize);   // We really don't want this to happen.
+	assert(out < tableSize);   // We really don't want this to happen.
 
 	return out;
 }
@@ -149,7 +154,7 @@ void HashMap::_deleteBucket(HashLink* p)
 
 void HashMap::_insert(KEYTYPE key, VALTYPE val)
 {
-	uint64_t hash = _hashKey(key);
+	uint64_t hash = _hashKey(key, _tableSize);
 	HashLink* link = _table[hash];
 
 	// If bucket already exists, find the last link in bucket.
@@ -164,5 +169,14 @@ void HashMap::_insert(KEYTYPE key, VALTYPE val)
 	}
 
 	_count++;
+}
+
+void HashMap::_resizeTable()
+{
+	// Create new table with twice the old size.
+	HashLink** _newTable = (HashLink**) calloc(_tableSize*2, sizeof(HashLink*));
+
+	// Recalculate hash values and modify the table entries and the HashLinks' next pointers
+	// TODO
 }
 
