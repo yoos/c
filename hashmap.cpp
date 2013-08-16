@@ -45,7 +45,7 @@ HashMap::~HashMap()
 	// Deallocate all HashLinks and table.
 	for (uint64_t i=0; i<_tableSize; i++) {
 		if (_table[i] != 0) {
-			_deleteHashLink(_table[i]);
+			_deleteBucket(_table[i]);
 		}
 	}
 }
@@ -139,10 +139,10 @@ uint64_t HashMap::_hashKey(KEYTYPE key)
 	return out;
 }
 
-void HashMap::_deleteHashLink(HashLink* p)
+void HashMap::_deleteBucket(HashLink* p)
 {
 	if (p->next() != 0) {
-		_deleteHashLink(p->next());
+		_deleteBucket(p->next());
 	}
 	delete p;
 }

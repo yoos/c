@@ -34,7 +34,7 @@ class HashMap {
 
 	// Helper functions
 	uint64_t _hashKey(KEYTYPE key);   // Generate hash.
-	void _deleteHashLink(HashLink* p);   // Delete HashLinks.
+	void _deleteBucket(HashLink* p);   // Delete HashLinks.
 	void _insert(KEYTYPE key, VALTYPE val);   // Insert key-value pairs.
 
 public:
