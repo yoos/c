@@ -100,6 +100,18 @@ uint64_t HashMap::getCapacity()
 	return _tableSize;
 }
 
+float HashMap::getLoad()
+{
+	uint64_t numBuckets = 0;
+	for(uint64_t i=0; i<_tableSize; i++) {
+		if (_table[i] != 0) {
+			numBuckets++;
+		}
+	}
+
+	return ((float) numBuckets) / _tableSize;
+}
+
 void HashMap::getKeys(KEYTYPE* keys)
 {
 	uint64_t key_index = 0;
@@ -114,12 +126,16 @@ void HashMap::getKeys(KEYTYPE* keys)
 	}
 }
 
+// TODO: Need a better hash function.
 uint64_t HashMap::_hashKey(KEYTYPE key)
 {
 	uint64_t out = 0;
 	for (int i=0; key[i] != '\0'; i++) {
-		out += key[i];
+		out = (out+key[i]) % _tableSize;
 	}
+
+	assert(out < _tableSize);   // We really don't want this to happen.
+
 	return out;
 }
 

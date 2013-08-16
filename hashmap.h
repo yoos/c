@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string>
+#include <assert.h>
 
 #define KEYTYPE std::string
 #define VALTYPE uint16_t
@@ -52,6 +53,11 @@ public:
 	 * @brief Get capacity of table.
 	 */
 	uint64_t getCapacity();
+
+	/**
+	 * @brief Get table load.
+	 */
+	float getLoad();
 
 	/**
 	 * @brief Store all keys in array allocated by caller.
