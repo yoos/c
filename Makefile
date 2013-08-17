@@ -1,4 +1,4 @@
-SRCS = hashmap.cpp
+SRCS = hashmap.cpp mergesort.cpp
 
 default: count test
 
