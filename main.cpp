@@ -32,8 +32,6 @@ int main(int argc, char **argv)
 	// Read file and store wordcount to hashmap.
 	readFile(argv[1], &wordsMap);
 
-	printf("Wordcount: %d  Hashmap load: %f\n\n", wordsMap.getCount(), wordsMap.getLoad());
-
 	// Store all words to array.
 	char* wordsArray[wordsMap.getCount()];
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
@@ -53,6 +51,12 @@ int main(int argc, char **argv)
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
 		free(wordsArray[i]);
 	}
+
+	// Performance report.
+	printf("\n\nUnique words counted: %d\n", wordsMap.getCount());
+	printf("Hash map final size: %d\n", wordsMap.getCapacity());
+	printf("Hash map final load: %f\n", wordsMap.getLoad());
+	printf("Hash map maximum depth: %d\n", wordsMap.getMaxDepth());
 
 	return 0;
 }
