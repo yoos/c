@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <hashmap.h>
+#include <mergesort.h>
 
 void test_hashlink()
 {
@@ -72,10 +73,46 @@ void test_hashmap()
 	assert(hm1.getLoad() == 0.5f);
 }
 
+void test_mergesort()
+{
+	// My mergesort updates the input array in place, so we need test input on
+	// the heap.
+	char* words[15];
+	for (int i=0; i<15; i++) {
+		words[i] = (char*) calloc(WORD_MAXLENGTH+1, sizeof(char));
+	}
+	sprintf(words[0], "mercury");
+	sprintf(words[1], "venus");
+	sprintf(words[2], "earth");
+	sprintf(words[3], "mars");
+	sprintf(words[4], "jupiter");
+	sprintf(words[5], "saturn");
+	sprintf(words[6], "neptune");
+	sprintf(words[7], "uranus");
+	sprintf(words[8], "moho");
+	sprintf(words[9], "eve");
+	sprintf(words[10], "kerbin");
+	sprintf(words[11], "duna");
+	sprintf(words[12], "dres");
+	sprintf(words[13], "jool");
+	sprintf(words[14], "eeloo");
+
+	mergeSort(words, 15);
+	for (int i=0; i<14; i++) {
+		assert(strcmp(words[i], words[i+1]) > 0);
+	}
+
+	// Deallocate.
+	for (int i=0; i<15; i++) {
+		free(words[i]);
+	}
+}
+
 int main(int argc, char** argv)
 {
 	test_hashlink();
 	test_hashmap();
+	test_mergesort();
 
 	return 0;
 }
