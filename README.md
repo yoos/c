@@ -25,7 +25,7 @@ The HashMap class has two main operations to examine: `inc()` and
 In summary:
 
 * `inc()`: Best O(1), worst O(n)
-* `_resizeTable()`: Best/worst O(n)
+* `_resizeTable()`: Best O(n), worst O(n^2)
 
 If the hash function was perfectly uniform and we could distribute the input
 words evenly across the hash table, `inc()` would be an O(1) operation. On the
