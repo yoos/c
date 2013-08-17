@@ -16,6 +16,19 @@ statistics.
 
 There are a few configurables in `config.h`.
 
+### Random Word Generator
+
+Included is `randgen.py`, a random word generator.
+
+To generate a total of approximately 1000 words 1 to 30 characters in length
+repeated between 1 to 20 times each, separated by spaces:
+
+	python randgen.py 1000
+
+To generate an almost unique list of words of the same:
+
+	python randgen.py u 1000
+
 
 ## Big-O Runtime
 
