@@ -122,16 +122,17 @@ float HashMap::getLoad()
 	return ((float) _numBuckets) / _tableSize;
 }
 
-void HashMap::getKeys(KEYTYPE* keys)
+void HashMap::getKeys(char** keys)
 {
 	uint64_t key_index = 0;
-	HashLink* hl = 0;   // Keep track of next HashLink from which to grab a key.
+	HashLink* link = 0;   // Keep track of next HashLink from which to grab a key.
 
 	for (uint64_t i=0; i<_tableSize; i++) {
-		hl = _table[i];
-		while (hl != 0) {
-			keys[key_index] = hl->key();
-			hl = hl->next();
+		link = _table[i];
+		while (link != 0) {
+			sprintf(keys[key_index], link->key().c_str());
+			link = link->next();
+			key_index++;
 		}
 	}
 }

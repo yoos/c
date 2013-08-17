@@ -5,6 +5,7 @@
 #ifndef HASHMAP_H
 #define HASHMAP_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string>
@@ -69,7 +70,7 @@ public:
 	 *
 	 * @output Number of keys stored in array.
 	 */
-	void getKeys(KEYTYPE* keys);
+	void getKeys(char** keys);
 };
 
 
