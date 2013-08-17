@@ -11,10 +11,7 @@
 #include <string>
 #include <assert.h>
 
-#define KEYTYPE std::string
-#define VALTYPE uint16_t
-#define LOAD_THRESHOLD 0.75   // Table load threshold at which we increase table size.
-#define RESIZE_FACTOR 2   // Multiply table size by this factor on resize.
+#include <config.h>
 
 class HashLink {
 	KEYTYPE     _key;

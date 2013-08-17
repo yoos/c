@@ -4,6 +4,8 @@
 #include <fstream>
 
 #include <hashmap.h>
+#include <mergesort.h>
+#include <config.h>
 
 void readFile(std::string filename, HashMap* words)
 {
@@ -24,22 +26,28 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	HashMap wordsMap(100);   // Create hashmap with 100 capacity to begin with.
+	// Create hashmap.
+	HashMap wordsMap(HASHMAP_INIT_CAPACITY);
 
+	// Read file and store wordcount to hashmap.
 	readFile(argv[1], &wordsMap);
 
-	printf("Wordcount: %d  Hashmap load: %f\n", wordsMap.getCount(), wordsMap.getLoad());
+	printf("Wordcount: %d  Hashmap load: %f\n\n", wordsMap.getCount(), wordsMap.getLoad());
 
+	// Store all words to array.
 	char* wordsArray[wordsMap.getCount()];
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
-		wordsArray[i] = (char*) calloc(200+1, sizeof(char));   // TODO: Assume maximum word length of 200 characters
+		wordsArray[i] = (char*) calloc(WORD_MAXLENGTH+1, sizeof(char));   // TODO: Assume maximum word length of 200 characters
 	}
 	wordsMap.getKeys(wordsArray);
 
+	// Sort array in reverse alphabetical order.
+	mergeSort(wordsArray, wordsMap.getCount());
+
+	// Print words in reverse alphabetical order along with their wordcounts.
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
 		printf("%6i: %-20s: %2d\n", i, wordsArray[i], wordsMap.get(wordsArray[i]));
 	}
-
 
 	// Free memory.
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
