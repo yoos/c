@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 
 	// Print words in reverse alphabetical order along with their wordcounts.
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
-		printf("%6i: %-20s: %2d\n", i, wordsArray[i], wordsMap.get(wordsArray[i]));
+		printf("%-20s: %2d\n", wordsArray[i], wordsMap.get(wordsArray[i]));
 	}
 
 	// Free memory.
