@@ -26,28 +26,29 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	// Create hashmap.
+	// Create hashmap. O(1) average.
 	HashMap wordsMap(HASHMAP_INIT_CAPACITY);
 
-	// Read file and store wordcount to hashmap.
+	// Read file and store wordcount to hashmap. O(n) average.
 	readFile(argv[1], &wordsMap);
 
-	// Store all words to array.
+	// Store all words to array. O(n) average.
 	char* wordsArray[wordsMap.getCount()];
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
-		wordsArray[i] = (char*) calloc(WORD_MAXLENGTH+1, sizeof(char));   // TODO: Assume maximum word length of 200 characters
+		wordsArray[i] = (char*) calloc(WORD_MAXLENGTH+1, sizeof(char));
 	}
 	wordsMap.getKeys(wordsArray);
 
-	// Sort array in reverse alphabetical order.
+	// Sort array in reverse alphabetical order. O(n log n).
 	mergeSort(wordsArray, wordsMap.getCount());
 
 	// Print words in reverse alphabetical order along with their wordcounts.
+	// O(n).
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
 		printf("%-20s: %2d\n", wordsArray[i], wordsMap.get(wordsArray[i]));
 	}
 
-	// Free memory.
+	// Free memory. O(n).
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
 		free(wordsArray[i]);
 	}
