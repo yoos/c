@@ -209,5 +209,6 @@ void HashMap::_resizeTable()
 			_deleteBucket(_oldTable[i]);
 		}
 	}
+	free(_oldTable);
 }
 
