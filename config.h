@@ -3,7 +3,6 @@
 
 // Performance
 #define HASHMAP_INIT_CAPACITY 100   // Initial capacity of hashmap used to store words found in input text file.
-#define WORD_MAXLENGTH 200
 
 // HashMap
 #define KEYTYPE std::string

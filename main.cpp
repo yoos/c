@@ -35,12 +35,12 @@ int main(int argc, char **argv)
 	// Store all words to array. O(n) average.
 	char* wordsArray[wordsMap.getCount()];
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
-		wordsArray[i] = (char*) calloc(WORD_MAXLENGTH+1, sizeof(char));
+		wordsArray[i] = (char*) calloc(wordsMap.getMaxKeyLength()+1, sizeof(char));
 	}
 	wordsMap.getKeys(wordsArray);
 
 	// Sort array in reverse alphabetical order. O(n log n).
-	mergeSort(wordsArray, wordsMap.getCount());
+	mergeSort(wordsArray, wordsMap.getCount(), wordsMap.getMaxKeyLength());
 
 	// Print words in reverse alphabetical order along with their wordcounts.
 	// O(n).

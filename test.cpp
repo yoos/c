@@ -79,7 +79,7 @@ void test_mergesort()
 	// the heap.
 	char* words[15];
 	for (int i=0; i<15; i++) {
-		words[i] = (char*) calloc(WORD_MAXLENGTH+1, sizeof(char));
+		words[i] = (char*) calloc(10, sizeof(char));
 	}
 	sprintf(words[0], "mercury");
 	sprintf(words[1], "venus");
@@ -97,9 +97,9 @@ void test_mergesort()
 	sprintf(words[13], "jool");
 	sprintf(words[14], "eeloo");
 
-	mergeSort(words, 15);
+	mergeSort(words, 15, 10);
 	for (int i=0; i<14; i++) {
-		assert(wordCompare(words[i], words[i+1]) > 0);
+		assert(wordCompare(words[i], words[i+1], 10) > 0);
 	}
 
 	// Deallocate.

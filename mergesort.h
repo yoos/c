@@ -12,18 +12,18 @@
 /**
  * @brief Top-down merge sort in reverse alphabetical order
  */
-void mergeSort(char** list, uint64_t size);
+void mergeSort(char** list, uint64_t size, uint64_t wordMaxLength);
 
 /**
  * @brief Allocates new array into which to merge left and right. Old array is
  * deallocated.
  */
-void merge(char** left, char** right, uint64_t lSize, uint64_t rSize);
+void merge(char** left, char** right, uint64_t lSize, uint64_t rSize, uint64_t wordMaxLength);
 
 /**
  * @brief String comparator.
  */
-int wordCompare(char* word1, char* word2);
+int wordCompare(char* word1, char* word2, uint64_t wordMaxLength);
 
 #endif // MERGESORT_H
 

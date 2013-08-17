@@ -1,6 +1,6 @@
 #include <mergesort.h>
 
-void mergeSort(char** list, uint64_t size)
+void mergeSort(char** list, uint64_t size, uint64_t wordMaxLength)
 {
 	// Base case -- don't do anything.
 	if (size <= 1) {
@@ -8,13 +8,13 @@ void mergeSort(char** list, uint64_t size)
 	}
 
 	uint64_t pivot = size / 2;
-	mergeSort(list, pivot);
-	mergeSort(list+pivot, size-pivot);
+	mergeSort(list, pivot, wordMaxLength);
+	mergeSort(list+pivot, size-pivot, wordMaxLength);
 
-	merge(list, list+pivot, pivot, size-pivot);
+	merge(list, list+pivot, pivot, size-pivot, wordMaxLength);
 }
 
-void merge(char** left, char** right, uint64_t lSize, uint64_t rSize)
+void merge(char** left, char** right, uint64_t lSize, uint64_t rSize, uint64_t wordMaxLength)
 {
 	//printf("Merging: %u ", left);
 	//for (int i=0; i<lSize; i++) printf("%s ", left[i]);
@@ -25,7 +25,7 @@ void merge(char** left, char** right, uint64_t lSize, uint64_t rSize)
 	// Allocate temporary array to sort into.
 	char* tmp[lSize+rSize];
 	for (uint64_t i=0; i<lSize+rSize; i++) {
-		tmp[i] = (char*) calloc(WORD_MAXLENGTH+1, sizeof(char));
+		tmp[i] = (char*) calloc(wordMaxLength+1, sizeof(char));
 	}
 
 	uint64_t ti = 0;   // tmp index
@@ -35,7 +35,7 @@ void merge(char** left, char** right, uint64_t lSize, uint64_t rSize)
 	// Merge into temporary array.
 	while (li < lSize || ri < rSize) {
 		if (li < lSize && ri < rSize) {
-			sprintf(tmp[ti++], (wordCompare(left[li], right[ri]) > 0) ? left[li++] : right[ri++]);   // Ignore case.
+			sprintf(tmp[ti++], (wordCompare(left[li], right[ri], wordMaxLength) > 0) ? left[li++] : right[ri++]);   // Ignore case.
 		}
 		else if (li < lSize) {
 			sprintf(tmp[ti++], left[li++]);
@@ -52,10 +52,10 @@ void merge(char** left, char** right, uint64_t lSize, uint64_t rSize)
 	}
 }
 
-int wordCompare(char* word1, char* word2)
+int wordCompare(char* word1, char* word2, uint64_t wordMaxLength)
 {
-	static char loword1[WORD_MAXLENGTH+1];
-	static char loword2[WORD_MAXLENGTH+1];
+	char loword1[wordMaxLength+1];
+	char loword2[wordMaxLength+1];
 
 	// Ignore case by converting everything to lowercase.
 	for (uint64_t i=0; word1[i] != '\0'; i++) {
@@ -65,6 +65,6 @@ int wordCompare(char* word1, char* word2)
 		loword2[i] = tolower(word2[i]);
 	}
 
-	return strcmp(loword1, loword2);
+	return strcmp(word1, word2);
 }
 

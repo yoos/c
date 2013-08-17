@@ -40,6 +40,7 @@ HashMap::HashMap(uint64_t tableSize)
 	_numBuckets = 0;
 	_count = 0;
 	_maxDepth = 0;
+	_maxKeyLength = 0;
 }
 
 HashMap::~HashMap()
@@ -98,6 +99,7 @@ void HashMap::inc(KEYTYPE key)
 			link->next(new HashLink(key, 1));
 			_count++;
 			depth++;
+			_maxKeyLength = MAX(_maxKeyLength, key.length());
 		}
 	}
 	else {
@@ -113,6 +115,7 @@ void HashMap::inc(KEYTYPE key)
 	}
 
 	_maxDepth = MAX(_maxDepth, depth);
+	_maxKeyLength = MAX(_maxKeyLength, key.length());
 }
 
 uint64_t HashMap::getCount()
@@ -128,6 +131,11 @@ uint64_t HashMap::getCapacity()
 uint64_t HashMap::getMaxDepth()
 {
 	return _maxDepth;
+}
+
+uint64_t HashMap::getMaxKeyLength()
+{
+	return _maxKeyLength;
 }
 
 float HashMap::getLoad()
