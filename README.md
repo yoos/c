@@ -14,6 +14,8 @@ with the exception of `std::string`.
 Optionally, `-v` can be specified on the command line to print performance
 statistics.
 
+There are a few configurables in `config.h`.
+
 
 ## Big-O Runtime
 
