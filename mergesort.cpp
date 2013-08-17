@@ -16,27 +16,39 @@ void mergeSort(char** list, uint64_t size)
 
 void merge(char** left, char** right, uint64_t lSize, uint64_t rSize)
 {
-	char* sorted[lSize+rSize];
+	//printf("Merging: %u ", left);
+	//for (int i=0; i<lSize; i++) printf("%s ", left[i]);
+	//printf("and %u ", right);
+	//for (int i=0; i<rSize; i++) printf("%s ", right[i]);
+	//printf("\n");
+
+	// Allocate temporary array to sort into.
+	char* tmp[lSize+rSize];
 	for (uint64_t i=0; i<lSize+rSize; i++) {
-		sorted[i] = (char*) calloc(WORD_MAXLENGTH+1, sizeof(char));
+		tmp[i] = (char*) calloc(WORD_MAXLENGTH+1, sizeof(char));
 	}
 
-	uint64_t si = 0;       // Sorted index
-	uint64_t li = 0;       // Left index
-	uint64_t ri = lSize;   // Right index
+	uint64_t ti = 0;   // tmp index
+	uint64_t li = 0;   // Left index
+	uint64_t ri = 0;   // Right index
 
-	// Merge.
-	while (li < lSize || ri < lSize+rSize) {
-		sorted[si++] = (strcmp(left[li], right[ri]) == -1 || ri == rSize) ? left[li++] : right[ri++];
+	// Merge into temporary array.
+	while (li < lSize || ri < rSize) {
+		if (li < lSize && ri < rSize) {
+			sprintf(tmp[ti++], (strcmp(left[li], right[ri]) > 0) ? left[li++] : right[ri++]);
+		}
+		else if (li < lSize) {
+			sprintf(tmp[ti++], left[li++]);
+		}
+		else {
+			sprintf(tmp[ti++], right[ri++]);
+		}
 	}
 
-	// Free memory.
+	// Copy contents of temporary array into old memory location and free memory.
 	for (uint64_t i=0; i<lSize+rSize; i++) {
-		free(left[i]);
+		sprintf(left[i], tmp[i]);
+		free(tmp[i]);
 	}
-	free(left);
-	free(right);
-
-	left = sorted;
 }
 

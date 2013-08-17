@@ -1,6 +1,7 @@
 #ifndef MERGESORT_H
 #define MERGESORT_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
@@ -8,7 +9,7 @@
 #include <config.h>
 
 /**
- * @brief Top-down merge sort in decreasing alphabetical order
+ * @brief Top-down merge sort in reverse alphabetical order
  */
 void mergeSort(char** list, uint64_t size);
 
