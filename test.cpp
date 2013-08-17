@@ -44,17 +44,17 @@ void test_hashmap()
 	assert(hm.get("mars") == 0);
 
 	// Calculate table load.
-	hm.inc("xnrld");   // Same hash value as "world"
+	hm.inc("!");
 	assert(hm.getCount() == 3);
 	assert(hm.get("world") == 1);
-	assert(hm.get("xnrld") == 1);
-	assert(hm.getLoad() == 0.02f);
+	assert(hm.get("!") == 1);
+	assert(hm.getLoad() == 0.03f);
 
 	// More collisions
 	hm.inc("ymrld");   // Same hash value as "world"
 	assert(hm.getCount() == 4);
 	assert(hm.get("ymrld") == 1);
-	assert(hm.getLoad() == 0.02f);
+	assert(hm.getLoad() == 0.04f);
 
 	// Does the table dynamically resize?
 	HashMap hm1(1);
