@@ -37,7 +37,13 @@ int main(int argc, char **argv)
 	wordsMap.getKeys(wordsArray);
 
 	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
-		printf("%6d: %s\n", i, wordsArray[i]);
+		printf("%6i: %-20s: %2d\n", i, wordsArray[i], wordsMap.get(wordsArray[i]));
+	}
+
+
+	// Free memory.
+	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
+		free(wordsArray[i]);
 	}
 
 	return 0;
