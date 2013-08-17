@@ -8,13 +8,21 @@ with the exception of `std::string`.
 
 ## Usage
 
+To run:
+
 	make
 	./count <file to parse>
+
+By itself, the program can deal with at least 1 million unique words in its
+hash table. To (mostly) remove this limit, run the following beforehand to
+remove the stack size limit:
+
+	ulimit -s unlimited
 
 Optionally, `-v` can be specified on the command line to print performance
 statistics.
 
-There are a few configurables in `config.h`.
+Finally, there are a few configurables in `config.h`.
 
 ### Random Word Generator
 
