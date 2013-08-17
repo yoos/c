@@ -39,6 +39,7 @@ HashMap::HashMap(uint64_t tableSize)
 	_tableSize = tableSize;
 	_numBuckets = 0;
 	_count = 0;
+	_maxDepth = 0;
 }
 
 HashMap::~HashMap()
