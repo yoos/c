@@ -150,13 +150,13 @@ void HashMap::getKeys(char** keys)
 	}
 }
 
-// TODO: Need a better hash function.
 uint64_t HashMap::_hashKey(KEYTYPE key, uint64_t tableSize)
 {
 	uint64_t out = 0;
 	for (int i=0; key[i] != '\0'; i++) {
-		out = (out+key[i]) % tableSize;
+		out = (out + i*i*key[i]);
 	}
+	out = out % tableSize;
 
 	assert(out < tableSize);   // We really don't want this to happen.
 
