@@ -99,7 +99,7 @@ void test_mergesort()
 
 	mergeSort(words, 15);
 	for (int i=0; i<14; i++) {
-		assert(strcmp(words[i], words[i+1]) > 0);
+		assert(wordCompare(words[i], words[i+1]) > 0);
 	}
 
 	// Deallocate.

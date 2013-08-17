@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <ctype.h>
 
 #include <config.h>
 
@@ -18,6 +19,11 @@ void mergeSort(char** list, uint64_t size);
  * deallocated.
  */
 void merge(char** left, char** right, uint64_t lSize, uint64_t rSize);
+
+/**
+ * @brief String comparator.
+ */
+int wordCompare(char* word1, char* word2);
 
 #endif // MERGESORT_H
 

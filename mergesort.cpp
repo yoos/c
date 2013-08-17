@@ -35,7 +35,7 @@ void merge(char** left, char** right, uint64_t lSize, uint64_t rSize)
 	// Merge into temporary array.
 	while (li < lSize || ri < rSize) {
 		if (li < lSize && ri < rSize) {
-			sprintf(tmp[ti++], (strcmp(left[li], right[ri]) > 0) ? left[li++] : right[ri++]);
+			sprintf(tmp[ti++], (wordCompare(left[li], right[ri]) > 0) ? left[li++] : right[ri++]);   // Ignore case.
 		}
 		else if (li < lSize) {
 			sprintf(tmp[ti++], left[li++]);
@@ -50,5 +50,21 @@ void merge(char** left, char** right, uint64_t lSize, uint64_t rSize)
 		sprintf(left[i], tmp[i]);
 		free(tmp[i]);
 	}
+}
+
+int wordCompare(char* word1, char* word2)
+{
+	static char loword1[WORD_MAXLENGTH+1];
+	static char loword2[WORD_MAXLENGTH+1];
+
+	// Ignore case by converting everything to lowercase.
+	for (uint64_t i=0; word1[i] != '\0'; i++) {
+		loword1[i] = tolower(word1[i]);
+	}
+	for (uint64_t i=0; word2[i] != '\0'; i++) {
+		loword2[i] = tolower(word2[i]);
+	}
+
+	return strcmp(loword1, loword2);
 }
 
