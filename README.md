@@ -99,10 +99,14 @@ the various parts.
 ## Assumptions
 
 * Input word file will not contain more than 1 million _unique_ words
-  (total number of words is less of a concern).
-* Recursive deletions of hash buckets won't run into stack overflow issues.
+  (total number of words is less of a concern) unless the user uses the
+  `ulimit` trick mentioned above.
+* Recursive deletions of hash buckets won't run into stack overflow issues
+  (hash table resizing should keep bucket depth to a minimum, though it can get
+  into the hundreds when input size exceeds a few million unique words).
 * Case-sensitive ordering.
-* This program will not be used in a real-time environment.
+* This program will not be used in a real-time environment (hash table resizing
+  will kill real-time).
 
 
 <!--
