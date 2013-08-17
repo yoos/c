@@ -49,6 +49,8 @@ HashMap::~HashMap()
 			_deleteBucket(_table[i]);
 		}
 	}
+
+	free(_table);
 }
 
 VALTYPE HashMap::get(KEYTYPE key)
