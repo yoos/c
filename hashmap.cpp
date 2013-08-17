@@ -79,11 +79,13 @@ void HashMap::inc(KEYTYPE key)
 {
 	uint64_t hash = _hashKey(key, _tableSize);
 	HashLink* link = _table[hash];
+	uint64_t depth = 1;
 
 	if (link != 0) {
 		// Dig through bucket.
 		while (link->key() != key && link->next() != 0) {
 			link = link->next();
+			depth++;
 		}
 
 		// Have we found the key?
@@ -94,6 +96,7 @@ void HashMap::inc(KEYTYPE key)
 		else {
 			link->next(new HashLink(key, 1));
 			_count++;
+			depth++;
 		}
 	}
 	else {
@@ -107,6 +110,8 @@ void HashMap::inc(KEYTYPE key)
 			_resizeTable();
 		}
 	}
+
+	_maxDepth = MAX(_maxDepth, depth);
 }
 
 uint64_t HashMap::getCount()
@@ -117,6 +122,11 @@ uint64_t HashMap::getCount()
 uint64_t HashMap::getCapacity()
 {
 	return _tableSize;
+}
+
+uint64_t HashMap::getMaxDepth()
+{
+	return _maxDepth;
 }
 
 float HashMap::getLoad()
@@ -164,18 +174,23 @@ void HashMap::_newTableInsert(KEYTYPE key, VALTYPE val)
 {
 	uint64_t hash = _hashKey(key, _tableSize);
 	HashLink* link = _table[hash];
+	uint64_t depth = 1;
 
 	if (link != 0) {
 		// Find next available slot.
 		while (link->next() != 0) {
 			link = link->next();
+			depth++;
 		}
 		link->next(new HashLink(key, val));
+		depth++;
 	}
 	else {
 		_table[hash] = new HashLink(key, val);
 		_numBuckets++;
 	}
+
+	_maxDepth = MAX(_maxDepth, depth);
 }
 
 void HashMap::_resizeTable()
@@ -184,6 +199,7 @@ void HashMap::_resizeTable()
 	uint64_t   _oldTableSize = _tableSize;   // Save old table size.
 	_tableSize *= RESIZE_FACTOR;   // Update table size.
 	_numBuckets = 0;   // Reset bucket count.
+	_maxDepth = 0;   // Reset maximum depth.
 	_table = (HashLink**) calloc(_tableSize, sizeof(HashLink*));   // Allocate new table.
 
 	// Step through the old table and populate new table using new hash values.

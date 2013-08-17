@@ -32,6 +32,7 @@ class HashMap {
 	uint64_t   _tableSize;    // Size of table
 	uint64_t   _numBuckets;   // Number of buckets
 	uint64_t   _count;        // Number of HashLinks
+	uint64_t   _maxDepth;     // Maximum bucket depth
 
 	// Helper functions
 	uint64_t _hashKey(KEYTYPE key, uint64_t tableSize);   // Generate hash.
@@ -55,6 +56,11 @@ public:
 	 * @brief Get capacity of table.
 	 */
 	uint64_t getCapacity();
+
+	/**
+	 * @brief Get maximum depth of table.
+	 */
+	uint64_t getMaxDepth();
 
 	/**
 	 * @brief Get table load.
