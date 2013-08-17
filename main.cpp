@@ -22,7 +22,7 @@ void readFile(std::string filename, HashMap* words)
 int main(int argc, char **argv)
 {
 	if (argc < 2) {
-		printf("Usage: %s <file to parse>\n", argv[0]);
+		printf("Usage: %s <file to parse> [-v]\n", argv[0]);
 		return -1;
 	}
 
@@ -53,10 +53,12 @@ int main(int argc, char **argv)
 	}
 
 	// Performance report.
-	printf("\n\nUnique words counted: %d\n", wordsMap.getCount());
-	printf("Hash map final size: %d\n", wordsMap.getCapacity());
-	printf("Hash map final load: %f\n", wordsMap.getLoad());
-	printf("Hash map maximum depth: %d\n", wordsMap.getMaxDepth());
+	if (argc > 2 && strcmp(argv[2], "-v") == 0) {
+		printf("\n\nUnique words counted: %d\n", wordsMap.getCount());
+		printf("Hash map final size: %d\n", wordsMap.getCapacity());
+		printf("Hash map final load: %f\n", wordsMap.getLoad());
+		printf("Hash map maximum depth: %d\n", wordsMap.getMaxDepth());
+	}
 
 	return 0;
 }
