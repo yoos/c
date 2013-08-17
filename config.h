@@ -11,6 +11,7 @@
 #define RESIZE_FACTOR 2   // Multiply table size by this factor on resize.
 
 #define MAX(a,b) ((a>b) ? a : b)
+#define ABS(x) ((x<0) ? (-x) : (x))
 
 #endif // CONFIG_H
 

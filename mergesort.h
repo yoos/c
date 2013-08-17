@@ -23,7 +23,7 @@ void merge(char** left, char** right, uint64_t lSize, uint64_t rSize, uint64_t w
 /**
  * @brief String comparator.
  */
-int wordCompare(char* word1, char* word2, uint64_t wordMaxLength);
+int wordCompare(char* word1, char* word2);
 
 #endif // MERGESORT_H
 
