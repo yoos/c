@@ -42,7 +42,7 @@ To generate an almost unique list of words of the same:
 
 ### HashMap
 
-The HashMap class has two main operations to examine: `inc()` and
+The HashMap class has two main operations to consider: `inc()` and
 `_resizeTable()`.
 
 In summary:
@@ -60,6 +60,9 @@ The `_resizeTable()` function needs to step through all words and allocate
 a proportional amount of memory, so it can do no better than O(n). If we assume
 a worst case insert performance of O(n), worst-case resizing is
 O(1) + O(2) + ... + O(n) = O(n(n+1)/2) = O(n^2).
+
+In total, the resize operation should take little time compared to the actual
+hashing, for a total time of O(n).
 
 ### Merge Sort
 
@@ -96,8 +99,10 @@ the various parts.
 ## Assumptions
 
 * Input word file will not contain more than 1 million _unique_ words
-  (total number of words is a much smaller concern).
+  (total number of words is less of a concern).
 * Recursive deletions of hash buckets won't run into stack overflow issues.
+* Case-sensitive ordering.
+* This program will not be used in a real-time environment.
 
 
 <!--
