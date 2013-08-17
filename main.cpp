@@ -24,11 +24,21 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	HashMap words(100);   // Create hashmap with 100 capacity to begin with.
+	HashMap wordsMap(100);   // Create hashmap with 100 capacity to begin with.
 
-	readFile(argv[1], &words);
+	readFile(argv[1], &wordsMap);
 
-	printf("Wordcount: %d  Hashmap load: %f\n", words.getCount(), words.getLoad());
+	printf("Wordcount: %d  Hashmap load: %f\n", wordsMap.getCount(), wordsMap.getLoad());
+
+	char* wordsArray[wordsMap.getCount()];
+	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
+		wordsArray[i] = (char*) calloc(200+1, sizeof(char));   // TODO: Assume maximum word length of 200 characters
+	}
+	wordsMap.getKeys(wordsArray);
+
+	for (uint64_t i=0; i<wordsMap.getCount(); i++) {
+		printf("%6d: %s\n", i, wordsArray[i]);
+	}
 
 	return 0;
 }
