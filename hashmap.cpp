@@ -161,9 +161,22 @@ void HashMap::getKeys(char** keys)
 uint64_t HashMap::_hashKey(KEYTYPE key, uint64_t tableSize)
 {
 	uint64_t out = 0;
-	for (int i=0; key[i] != '\0'; i++) {
-		out = (out + i*i*key[i]);
+
+	// Use up to eight characters of key to interpret as uint64_t.
+	for (int i=0; key[i] != '\0' && i<8; i++) {
+		out += (key[i]-0x20)<<(8*i);
 	}
+
+	// Scale output to tableSize. This should distribute the hashes somewhat
+	// evenly across the table.
+	out *= tableSize/0x60;   // There are about 0x60 ASCII characters.
+
+	// Now consider the rest of the key.
+	for (int i=0; key[i] != '\0'; i++) {
+		out = (out + (2*i+1)*(2*i+1)*key[i]);   // Be careful with i=0.
+	}
+
+	// Keep hash within tableSize.
 	out = out % tableSize;
 
 	assert(out < tableSize);   // We really don't want this to happen.
