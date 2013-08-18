@@ -16,12 +16,6 @@ void mergeSort(char** list, uint64_t size, uint64_t wordMaxLength)
 
 void merge(char** left, char** right, uint64_t lSize, uint64_t rSize, uint64_t wordMaxLength)
 {
-	//printf("Merging: %u ", left);
-	//for (int i=0; i<lSize; i++) printf("%s ", left[i]);
-	//printf("and %u ", right);
-	//for (int i=0; i<rSize; i++) printf("%s ", right[i]);
-	//printf("\n");
-
 	// Allocate temporary array to sort into.
 	char* tmp[lSize+rSize];
 	for (uint64_t i=0; i<lSize+rSize; i++) {
