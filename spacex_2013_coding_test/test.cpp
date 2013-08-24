@@ -87,8 +87,8 @@ void test_mergesort()
 	sprintf(words[3], "mars");
 	sprintf(words[4], "jupiter");
 	sprintf(words[5], "saturn");
-	sprintf(words[6], "neptune");
-	sprintf(words[7], "uranus");
+	sprintf(words[6], "uranus");
+	sprintf(words[7], "neptune");
 	sprintf(words[8], "moho");
 	sprintf(words[9], "eve");
 	sprintf(words[10], "kerbin");
