@@ -62,6 +62,11 @@ int32_t fti(uint32_t flt)
 
 int main(int argc, char **argv)
 {
+	if (argc != 2) {
+		printf("Usage:\n  %s <32-bit float as 8-char hex string>\n", argv[0]);
+		return 1;
+	}
+
 	// Read
 	unsigned long n;
 	sscanf(argv[1], "%lx", &n);
