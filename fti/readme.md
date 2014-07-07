@@ -9,6 +9,5 @@ Usage:
 
 ```bash
 ./fti <32-bit float as 8-char hex string>
-
 ```
 
